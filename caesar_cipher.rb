@@ -13,6 +13,3 @@ def encode(string, numShift)
     end
     newChars.pack('c*')
 end
-
-puts encode("ABCabcXYZxyz",1)
-puts encode("Hello World!",10)
