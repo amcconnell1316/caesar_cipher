@@ -5,7 +5,7 @@ def substrings_nested(string, dictionary)
       string_results[substring] += 1 if current_string.include?(substring)
       string_results
     end
-    current_string_results.each { |substring, count| results[substring] += count 
+    current_string_results.each { |substring, count| results[substring] += count }
     results
   end
 end
