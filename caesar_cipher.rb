@@ -1,15 +1,15 @@
 def encode(string, numShift)
-    chars = string.bytes()
-    newChars = chars.map do |char|
-        newChar = char
-        if char >= 65 && char <=90 
-            newChar = char + numShift
-            newChar -= 26 if newChar > 90
-        elsif char >= 97 && char <= 122
-            newChar = char + numShift
-            newChar -= 26 if newChar > 122    
-        end
-        newChar
+  chars = string.bytes
+  new_chars = chars.map do |char|
+    new_char = char
+    if char >= 65 && char <= 90
+      new_char = char + num_shift
+      new_char -= 26 if new_char > 90
+    elsif char >= 97 && char <= 122
+      new_char = char + num_shift
+      new_char -= 26 if new_char > 122
     end
-    newChars.pack('c*')
+    new_char
+  end
+  new_chars.pack('c*')
 end
