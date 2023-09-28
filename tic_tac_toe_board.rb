@@ -1,9 +1,6 @@
 class Board
   def initialize
     @spots = Array.new(3) {Array.new(3, 0)}
-    @spots[0][0] = -1
-    @spots[1][1] = -1
-    #@spots[2][2] = -1
   end
 
   def play_turn(player_symbol, spot)
@@ -15,7 +12,7 @@ class Board
     when "x"
       player = -1
     when "o"
-      player = 0
+      player = 1
     end
     if spot_downcase.include?("1") 
       row = 0
@@ -58,9 +55,15 @@ class Board
     win_conditions << @spots[0][2] + @spots[1][2] + @spots[2][2] # col C
     win_conditions << @spots[0][2] + @spots[1][1] + @spots[2][0] # diagonal /
     win_conditions << @spots[0][0] + @spots[1][1] + @spots[2][2] # diagonal \
-    return 1 if win_conditions.max == 3 
-    return -1 if win_conditions.min == -3
-    0
+    if win_conditions.max == 3 
+      return "o"
+    elsif win_conditions.min == -3
+      return "x"
+    elsif (@spots.all? {|row| row.all? {|spot| spot != 0}})
+      return "tie"
+    else
+      return nil
+    end
   end
 
   private
@@ -73,8 +76,9 @@ class Board
   end
 end
 
-test = Board.new
-test.print_board
-test.play_turn("x", "c3")
-test.print_board
-puts test.check_winner
+# test = Board.new
+# puts test.play_turn("o","a1")
+# test.play_turn("o","b1")
+# test.play_turn("o","c1")
+# puts test.check_winner
+# test.print_board
