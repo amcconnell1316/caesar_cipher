@@ -9,29 +9,12 @@ class Board
   def play_turn(player_symbol, spot)
     spot_downcase = spot.downcase
     return 'player must be x or o' unless %w[x o].include?(player_symbol)
-    return 'invaild spot' unless spot_downcase.include?(/[abc]/)
-    return 'invaild spot' unless spot_downcase.include?(/123/)
+    return 'invaild spot' unless spot_downcase.match(/[abc]/)
+    return 'invaild spot' unless spot_downcase.match(/[123]/)
 
-    case player_symbol
-    when 'x'
-      player = -1
-    when 'o'
-      player = 1
-    end
-    if spot_downcase.include?('1')
-      row = 0
-    elsif spot_downcase.include?('2')
-      row = 1
-    else
-      row = 2
-    end
-    if spot_downcase.include?('a')
-      col = 0
-    elsif spot_downcase.include?('b')
-      col = 1
-    else
-      col = 2
-    end
+    player = convert_player_symbol(player_symbol)
+    row = convert_row(spot_downcase)
+    col = convert_col(spot_downcase)
 
     return 'spot taken' if @spots[row][col] != 0
 
@@ -82,6 +65,41 @@ class Board
     when -1 then 'x'
     when 1 then 'o'
     end
+  end
+
+  def convert_player_symbol(player_symbol)
+    ret_val = nil
+    case player_symbol
+    when 'x'
+      ret_val = -1
+    when 'o'
+      ret_val = 1
+    end
+    ret_val
+  end
+
+  def convert_row(spot)
+    ret_val = nil
+    if spot.include?('1')
+      ret_val = 0
+    elsif spot.include?('2')
+      ret_val = 1
+    else
+      ret_val = 2
+    end
+    ret_val
+  end
+
+  def convert_col(spot)
+    ret_val = nil
+    if spot.include?('a')
+      ret_val = 0
+    elsif spot.include?('b')
+      ret_val = 1
+    else
+      ret_val = 2
+    end
+    ret_val
   end
 end
 

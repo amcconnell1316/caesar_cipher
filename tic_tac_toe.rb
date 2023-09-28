@@ -13,14 +13,15 @@ while winner.nil?
   break if move.downcase == 'quit'
 
   error =  board.play_turn(player, move)
-  if !error.nil?
+  unless error.nil?
     puts error
     puts 'Moves must be a combination of letter and number that correspond to an open spot'
-  else
-    winner = board.check_winner
-    if winner.nil?
-      player = (player == 'o' ? 'x' : 'o')
-    end
+    next
+  end
+
+  winner = board.check_winner
+  if winner.nil?
+    player = (player == 'o' ? 'x' : 'o')
   end
 end
 
