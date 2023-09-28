@@ -8,6 +8,7 @@ class Board
     return "player must be x or o" if !(player_symbol == "x" || player_symbol == "o")
     return "invaild spot" if !(spot_downcase.include?("a") || spot_downcase.include?("b") || spot_downcase.include?("c"))
     return "invaild spot" if !(spot_downcase.include?("1") || spot_downcase.include?("2") || spot_downcase.include?("3"))
+    
     case player_symbol
     when "x"
       player = -1
@@ -29,6 +30,7 @@ class Board
       col = 2
     end
     
+    return "spot taken" if @spots[row][col] != 0
     @spots[row][col] = player
     nil
   end

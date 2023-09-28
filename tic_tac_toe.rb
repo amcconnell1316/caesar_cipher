@@ -1,11 +1,10 @@
 require_relative 'tic_tac_toe_board.rb'
 winner = nil;
 puts "Welcome to tic_tac_toe!"
-player = "o"
+player = "x"
 board = Board.new
 
 while winner.nil?
-  player = (player == "o" ? "x" : "o")
   board.print_board
   puts "Player #{player}'s turn: "
   move = gets.chomp
@@ -17,6 +16,7 @@ while winner.nil?
     puts "Moves must be a combination of letter and number that correspond to an open spot"
   else
     winner = board.check_winner
+    player = (player == "o" ? "x" : "o") if winner.nil?
   end
 end
 
@@ -28,6 +28,3 @@ elsif  !(winner == "tie")
 else
   puts "It's a tie!"
 end
-
-#bugs
-#overwriting a spot
