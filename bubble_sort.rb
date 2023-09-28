@@ -1,16 +1,20 @@
+# frozen_string_literal: true
+
 def bubble_sort(array)
   num_loops = array.length - 2
   sorted_array = array.clone
   num_loops.downto(0) do |i|
     0.upto(i) do |j|
-      if sorted_array[j] <= sorted_array[j + 1]
-        temp_val = sorted_array[j + 1]
-        sorted_array[j + 1] = sorted_array[j]
-        sorted_array[j] = temp_val
-      end
+      swap!(sorted_array, j, j + 1) if sorted_array[j] <= sorted_array[j + 1]
     end
   end
   sorted_array
+end
+
+def swap!(array, idx_i, idx_j)
+  temp_val = array[idx_j]
+  array[idx_j] = array[idx_i]
+  array[idx_i] = temp_val
 end
 
 p bubble_sort([4, 3, 78, 2, 0, 2])
