@@ -1,35 +1,38 @@
 # frozen_string_literal: true
 
 require_relative 'tic_tac_toe_board'
-winner = nil
-puts 'Welcome to tic_tac_toe!'
-player = 'x'
-board = Board.new
 
-while winner.nil?
-  board.print_board
-  puts "Player #{player}'s turn: "
-  move = gets.chomp
-  break if move.downcase == 'quit'
-
-  error =  board.play_turn(player, move)
-  unless error.nil?
-    puts error
-    puts 'Moves must be a combination of letter and number that correspond to an open spot'
-    next
+class Game 
+  def initialize(board = Board.new)
+    @board = board
+    @current_player = 'x'
   end
 
-  winner = board.check_winner
-  if winner.nil?
-    player = (player == 'o' ? 'x' : 'o')
+  def play
+    puts 'Welcome to tic_tac_toe!'
+    take_turn until @board.game_over?
+    puts @board.winner.nil? ? "It's a tie!" : "Congratulations player #{@board.winner}! You win!"
+  end
+
+  def take_turn
+    @board.print_board
+    puts "Player #{@current_player}'s turn: "  
+    move = player_input
+    @board.play_turn(@current_player, move)  
+    @current_player = (@current_player == 'o' ? 'x' : 'o')
+  end
+
+  def player_input
+    move = ""
+    loop do
+      move = gets.chomp
+      break if @board.valid_move?(move)
+
+      puts 'Moves must be a combination of letter and number that correspond to an open spot'
+    end
+    move
   end
 end
 
-if winner.nil?
-  puts 'Play again soon!'
-elsif  winner != 'tie'
-  board.print_board
-  puts "Congratulations player #{player}! You win!"
-else
-  puts "It's a tie!"
-end
+game = Game.new
+game.play

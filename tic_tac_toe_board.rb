@@ -6,20 +6,25 @@ class Board
     @spots = Array.new(3) { Array.new(3, 0) }
   end
 
-  def play_turn(player_symbol, spot)
+  def valid_move?(spot)
     spot_downcase = spot.downcase
-    return 'player must be x or o' unless %w[x o].include?(player_symbol)
-    return 'invaild spot' unless spot_downcase.match(/[abc]/)
-    return 'invaild spot' unless spot_downcase.match(/[123]/)
+    return false unless spot_downcase.match(/^[abc][123]$/)
 
-    player = convert_player_symbol(player_symbol)
     row = convert_row(spot_downcase)
     col = convert_col(spot_downcase)
 
-    return 'spot taken' if @spots[row][col] != 0
+    return false if @spots[row][col] != 0
 
+    true
+  end
+
+  def play_turn(player_symbol, spot)
+    spot_downcase = spot.downcase
+    player = convert_player_symbol(player_symbol)
+    row = convert_row(spot_downcase)
+    col = convert_col(spot_downcase)
+    
     @spots[row][col] = player
-    nil
   end
 
   def print_board
@@ -34,7 +39,11 @@ class Board
     end
   end
 
-  def check_winner
+  def game_over?
+    !winner.nil? || @spots.all? { |row| row.all? { |spot| spot != 0 } }
+  end
+
+  def winner
     win_conditions = []
     win_conditions << @spots[0][0] + @spots[0][1] + @spots[0][2] # row 1
     win_conditions << @spots[1][0] + @spots[1][1] + @spots[1][2] # row 2
@@ -50,8 +59,6 @@ class Board
       ret_val = 'o'
     elsif win_conditions.min == -3
       ret_val = 'x'
-    elsif @spots.all? { |row| row.all? { |spot| spot != 0 } }
-      ret_val = 'tie'
     end
 
     ret_val
