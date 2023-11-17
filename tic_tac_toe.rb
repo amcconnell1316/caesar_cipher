@@ -11,7 +11,8 @@ class Game
   def play
     puts 'Welcome to tic_tac_toe!'
     take_turn until @board.game_over?
-    puts @board.winner.nil? ? "It's a tie!" : "Congratulations player #{@board.winner}! You win!"
+    winner = @board.winner
+    puts winner.nil? ? "It's a tie!" : "Congratulations player #{winner}! You win!"
   end
 
   def take_turn
@@ -33,6 +34,3 @@ class Game
     move
   end
 end
-
-game = Game.new
-game.play

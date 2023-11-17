@@ -40,7 +40,7 @@ class Board
   end
 
   def game_over?
-    !winner.nil? || @spots.all? { |row| row.all? { |spot| spot != 0 } }
+    !winner.nil? || board_full?
   end
 
   def winner
@@ -107,6 +107,10 @@ class Board
       ret_val = 2
     end
     ret_val
+  end
+
+  def board_full?
+    @spots.all? { |row| row.all? { |spot| spot != 0 } }
   end
 end
 
